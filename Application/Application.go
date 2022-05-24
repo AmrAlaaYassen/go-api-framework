@@ -1,4 +1,4 @@
-package main
+package Application
 
 import (
 	"database/sql"
@@ -12,7 +12,7 @@ type Application struct {
 	Connection *sql.DB
 }
 
-func app() func() Application {
+func App() func() Application {
 	return func() Application {
 		var application Application
 		application.Gin = gin.Default()
@@ -23,4 +23,10 @@ func app() func() Application {
 
 func (app *Application) Share() {
 
+}
+
+func NewApp() Application {
+	app := App()
+	server := app()
+	return server
 }

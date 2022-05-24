@@ -1,16 +1,21 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"app.com/Application"
+	"app.com/Models"
+	"app.com/Routes"
 )
 
 func main() {
-	app := app()
-	server := app()
-	server.Gin.GET("/ping", func(context *gin.Context) {
-		req := newRequest(context)
-		req.ok("Thank you...")
+	app := Application.NewApp()
+	// migrate project
+	app.DB.AutoMigrate(&Models.User{})
+	//close app connection
+	Application.CloseConnection(&app)
+	// routing
+	routerApp := Routes.RouterApp{&app}
+	routerApp.Routing()
 
-	})
-	server.Gin.Run()
+	// start server
+	app.Gin.Run()
 }

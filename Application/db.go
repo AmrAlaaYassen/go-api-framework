@@ -1,4 +1,4 @@
-package main
+package Application
 
 import (
 	"database/sql"
@@ -8,7 +8,7 @@ import (
 )
 
 func makeConnection() *gorm.DB {
-	dsn := "sql11491212:dEEuTM1BxU@tcp(sql11.freemysqlhosting.net:3306)/sql11491212?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
@@ -41,7 +41,7 @@ func connectToDataBase(share SharedResources) {
 		req.Connection = getConnection(req.DB)
 	}
 }
-func closeConnection(share SharedResources) {
+func CloseConnection(share SharedResources) {
 	switch share.(type) {
 	case *Application:
 		app := share.(*Application)
