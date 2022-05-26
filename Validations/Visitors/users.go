@@ -13,3 +13,10 @@ func RegisterValidation(user Models.User) validation.Errors {
 		"password": validation.Validate(user.Password, Validations.IsRereuired(), Validations.MinMax()),
 	}
 }
+
+func LoginValidation(user Models.User) validation.Errors {
+	return validation.Errors{
+		"email":    validation.Validate(user.Email, Validations.IsRereuired(), Validations.MinMax(), Validations.IsEmail()),
+		"password": validation.Validate(user.Password, Validations.IsRereuired(), Validations.MinMax()),
+	}
+}

@@ -24,3 +24,21 @@ func Register(c *gin.Context) {
 
 	r.Created(user)
 }
+
+func Login(c *gin.Context) {
+	r := Application.NewRequest(c)
+	var user Models.User
+	r.Context.ShouldBind(&user)
+
+	if r.ValidateRequest(Visitors.LoginValidation(user)).Fails() {
+		return
+	}
+
+	r.DB.Where("email = ?", user.Email).Where("password = ?", user.Password).First(&user)
+	if user.ID == 0 {
+		r.UserNotFound()
+		return
+	}
+
+	r.Ok(user)
+}
