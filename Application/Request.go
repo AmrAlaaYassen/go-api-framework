@@ -82,11 +82,20 @@ func (req *Request) Auth() *Request {
 	return req
 }
 
+func (req *Request) Fails() bool {
+	if req.ValidationError != nil {
+		req.BadRequest(req.ValidationError)
+		return true
+	}
+	return false
+}
+
 func setLang(req *Request) {
 	lang := gotrans.DetectLanguage(req.Context.GetHeader("Accept-Language"))
 	gotrans.SetDefaultLocale(lang)
 	req.Lang = lang
 }
-func (req *Request) ValidateRequest(errors validation.Errors) {
+func (req *Request) ValidateRequest(errors validation.Errors) *Request {
 	req.ValidationError = errors.Filter()
+	return req
 }
