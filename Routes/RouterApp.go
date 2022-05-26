@@ -7,6 +7,6 @@ type RouterApp struct {
 }
 
 func (router RouterApp) Routing() {
-	router.visitorRoutes()
+	router.authRoutes()
 
 }

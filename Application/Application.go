@@ -2,6 +2,8 @@ package Application
 
 import (
 	"database/sql"
+	"fmt"
+	"github.com/bykovme/gotrans"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -12,12 +14,17 @@ type Application struct {
 	Connection *sql.DB
 }
 
-func App() func() Application {
-	return func() Application {
+func App() func() *Application {
+	return func() *Application {
 		var application Application
 		application.Gin = gin.Default()
 		connectToDataBase(&application)
-		return application
+		err := gotrans.InitLocales("./public/lang")
+
+		if err != nil {
+			fmt.Println("Error on loading trans files ..", err.Error())
+		}
+		return &application
 	}
 }
 
@@ -25,8 +32,7 @@ func (app *Application) Share() {
 
 }
 
-func NewApp() Application {
+func NewApp() *Application {
 	app := App()
-	server := app()
-	return server
+	return app()
 }
