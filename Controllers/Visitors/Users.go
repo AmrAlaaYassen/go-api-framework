@@ -3,6 +3,7 @@ package Visitors
 import (
 	"app.com/Application"
 	"app.com/Models"
+	tranformer "app.com/Transformers/Visitors"
 	"app.com/Validations/Visitors"
 	"github.com/gin-gonic/gin"
 )
@@ -22,7 +23,7 @@ func Register(c *gin.Context) {
 	user.Group = "user"
 	r.DB.Create(&user)
 
-	r.Created(user)
+	r.Created(tranformer.UserTransformer(user))
 }
 
 func Login(c *gin.Context) {
@@ -39,6 +40,5 @@ func Login(c *gin.Context) {
 		r.UserNotFound()
 		return
 	}
-
-	r.Ok(user)
+	r.Ok(tranformer.UserTransformer(user))
 }

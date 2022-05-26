@@ -2,15 +2,15 @@ package Auth
 
 import (
 	"app.com/Application"
-	"github.com/bykovme/gotrans"
+	"app.com/Transformers/Visitors"
 	"github.com/gin-gonic/gin"
 )
 
-func CreateUser(c *gin.Context) {
+func Me(c *gin.Context) {
 	r, auth := Application.AuthRequest(c)
 
 	if !auth {
 		return
 	}
-	r.Ok(gotrans.T("hello"))
+	r.Ok(Visitors.UserTransformer(*r.User))
 }

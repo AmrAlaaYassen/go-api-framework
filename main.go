@@ -2,7 +2,6 @@ package main
 
 import (
 	"app.com/Application"
-	"app.com/Models"
 	"app.com/Routes"
 )
 
@@ -11,7 +10,7 @@ func main() {
 	app := Application.NewApp()
 
 	// migrate project
-	app.DB.AutoMigrate(&Models.User{})
+	app.Migrate()
 	//close app connection
 	Application.CloseConnection(app)
 	// routing

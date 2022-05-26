@@ -1,6 +1,7 @@
 package Application
 
 import (
+	"app.com/Database"
 	"database/sql"
 	"fmt"
 	"github.com/bykovme/gotrans"
@@ -35,4 +36,8 @@ func (app *Application) Share() {
 func NewApp() *Application {
 	app := App()
 	return app()
+}
+
+func (app *Application) Migrate() {
+	Database.Migrate(app.DB)
 }

@@ -70,8 +70,9 @@ func (req *Request) Auth() *Request {
 
 	if authHeader != "" {
 		fmt.Println(authHeader)
-		req.DB.Where("token = ? ", authHeader).First(&req.User)
-		//req.DB.Find(&req.User, "token = ?", authHeader)
+		var user Models.User
+		req.DB.Where("token = ? ", authHeader).First(&user)
+		req.User = &user
 		if req.User.ID != 0 {
 			req.IsAuth = true
 			if req.User.Group == "admin" {
