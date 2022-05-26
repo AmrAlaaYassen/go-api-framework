@@ -8,7 +8,7 @@ import (
 )
 
 func makeConnection() *gorm.DB {
-	dsn := 
+	dsn :=
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
