@@ -48,7 +48,7 @@ func NewRequestWithAuth(c *gin.Context) *Request {
 }
 
 // Response standard
-func (req Request) Response(code int, body interface{}) {
+func (req Request) Response(code int, body map[string]interface{}) {
 	CloseConnection(&req)
 	req.Context.JSON(code, body)
 }
