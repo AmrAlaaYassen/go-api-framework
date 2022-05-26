@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/bykovme/gotrans"
 	"github.com/gin-gonic/gin"
+	validation "github.com/go-ozzo/ozzo-validation"
 	"gorm.io/gorm"
 )
 
@@ -14,13 +15,14 @@ type SharedResources interface {
 }
 
 type Request struct {
-	Context    *gin.Context
-	DB         *gorm.DB
-	Connection *sql.DB
-	User       *Models.User
-	IsAuth     bool
-	IsAdmin    bool
-	Lang       string
+	Context         *gin.Context
+	DB              *gorm.DB
+	Connection      *sql.DB
+	User            *Models.User
+	IsAuth          bool
+	IsAdmin         bool
+	Lang            string
+	ValidationError error
 }
 
 func (req *Request) Share() {}
@@ -84,4 +86,7 @@ func setLang(req *Request) {
 	lang := gotrans.DetectLanguage(req.Context.GetHeader("Accept-Language"))
 	gotrans.SetDefaultLocale(lang)
 	req.Lang = lang
+}
+func (req *Request) ValidateRequest(errors validation.Errors) {
+	req.ValidationError = errors.Filter()
 }
