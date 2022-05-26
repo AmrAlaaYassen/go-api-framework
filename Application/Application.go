@@ -2,6 +2,7 @@ package Application
 
 import (
 	"app.com/Database"
+	"app.com/Database/Seeders"
 	"database/sql"
 	"fmt"
 	"github.com/bykovme/gotrans"
@@ -40,4 +41,8 @@ func NewApp() *Application {
 
 func (app *Application) Migrate() {
 	Database.Migrate(app.DB)
+}
+
+func (app *Application) Seed() {
+	Seeders.Seed(app.DB)
 }
